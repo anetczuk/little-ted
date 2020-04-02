@@ -47,7 +47,7 @@ class MainWindow(QtBaseClass):
 
         self.settingsFilePath = None
 
-#         self.ui.textEdit.installEventFilter( self )
+        self.ui.textEdit.installEventFilter( self )
 
 #         self.statusBar().showMessage("Ready")
 
@@ -118,11 +118,27 @@ class MainWindow(QtBaseClass):
 
     
     def eventFilter( self, obj, event ):
+        if obj is self.ui.textEdit:
+            return self.textEditEventHandler(obj, event)
+        return super(MainWindow, self).eventFilter( obj, event )
+    
+    def textEditEventHandler(self, obj, event ):
+        if event.type() == QEvent.Wheel:
+            modifiers = event.modifiers()
+            if modifiers == QtCore.Qt.ControlModifier:
+                delta = event.angleDelta().y()
+                if delta > 0:
+                    self.ui.textEdit.zoomIn(2);
+                elif delta < 0:
+                    self.ui.textEdit.zoomOut(2);
+#                     _LOGGER.info( "event intercepted: %s %s mod: %s %s", obj, event, modifiers, delta )
+                return True
+
         ### context menu disabled in Ui file (Qt Designer)
-#         if obj is self.ui.textEdit:
 #             if event.type() == QEvent.ContextMenu:
 #                 _LOGGER.info( "event intercepted: %s %s", obj, event )
 #                 return True
+
         return super(MainWindow, self).eventFilter( obj, event )
 
 

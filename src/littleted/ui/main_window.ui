@@ -39,27 +39,30 @@
     </property>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuZoom">
+    <property name="title">
+     <string>Zoom</string>
+    </property>
+    <addaction name="actionZoom_In"/>
+    <addaction name="actionZoom_Out"/>
+   </widget>
    <addaction name="menuConnect"/>
+   <addaction name="menuZoom"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionConnect">
-   <property name="text">
-    <string>&amp;Connect To...</string>
-   </property>
-  </action>
   <action name="actionExit">
    <property name="text">
     <string>&amp;Exit</string>
    </property>
   </action>
-  <action name="actionDisconnect">
+  <action name="actionZoom_In">
    <property name="text">
-    <string>&amp;Disconnect</string>
+    <string>Zoom In</string>
    </property>
   </action>
-  <action name="actionReconnect">
+  <action name="actionZoom_Out">
    <property name="text">
-    <string>&amp;Reconnect</string>
+    <string>Zoom Out</string>
    </property>
   </action>
  </widget>
@@ -70,6 +73,38 @@
    <signal>triggered()</signal>
    <receiver>mainWindow</receiver>
    <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>242</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionZoom_In</sender>
+   <signal>triggered()</signal>
+   <receiver>textEdit</receiver>
+   <slot>zoomIn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>242</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionZoom_Out</sender>
+   <signal>triggered()</signal>
+   <receiver>textEdit</receiver>
+   <slot>zoomOut()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
