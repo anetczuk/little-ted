@@ -117,12 +117,12 @@ class MainWindow(QtBaseClass):
     ## ========================================================================
 
     
-    def eventFilter( self, obj, event ):
+    def eventFilter( self, obj, event: QEvent ):
         if obj is self.ui.textEdit:
             return self.textEditEventHandler(obj, event)
         return super(MainWindow, self).eventFilter( obj, event )
     
-    def textEditEventHandler(self, obj, event ):
+    def textEditEventHandler(self, obj, event: QEvent ):
         if event.type() == QEvent.Wheel:
             modifiers = event.modifiers()
             if modifiers == QtCore.Qt.ControlModifier:
@@ -139,6 +139,12 @@ class MainWindow(QtBaseClass):
 #                 _LOGGER.info( "event intercepted: %s %s", obj, event )
 #                 return True
 
+#         if isinstance(event, QtGui.QKeyEvent):
+#             ## intercept
+#             return True
+# 
+#         _LOGGER.info( "event: %s %s", obj, event )
+        
         return super(MainWindow, self).eventFilter( obj, event )
 
 

@@ -1,0 +1,13 @@
+keycode 107 = NoSymbol Sys_Req NoSymbol Sys_Req
+
+keycode 121 = NoSymbol
+keycode 122 = NoSymbol
+keycode 123 = NoSymbol
+
+keycode 142 = NoSymbol
+keycode 148 = NoSymbol
+keycode 158 = NoSymbol
+keycode 163 = NoSymbol
+keycode 180 = NoSymbol
+
+keycode 213 = NoSymbol
