@@ -48,7 +48,7 @@ class MainWindow(QtBaseClass):
         self.settingsFilePath = None
 
         self.ui.textEdit.installEventFilter( self )
-        
+
         iconPath = resources.getImagePath( "text-editor-white.png" )
         appIcon = QIcon( iconPath )
         self.setWindowIcon( appIcon )
@@ -120,7 +120,7 @@ class MainWindow(QtBaseClass):
 
     ## ========================================================================
 
-    
+
     def eventFilter( self, obj, event: QEvent ):
 #         if event.type() == QEvent.KeyPress:
 #             if len(event.text()) < 1:
@@ -129,12 +129,12 @@ class MainWindow(QtBaseClass):
 #                     event.ignore()
 #                     return True
 #             _LOGGER.info( "event: %s %s: %s >%s<", obj, event, event.key(), event.text() )
-        
+
         if obj is self.ui.textEdit:
             return self.textEditEventHandler(obj, event)
-        
+
         return super().eventFilter( obj, event )
-    
+
     def textEditEventHandler(self, obj, event: QEvent ):
         if event.type() == QEvent.Wheel:
             modifiers = event.modifiers()

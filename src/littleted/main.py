@@ -41,7 +41,7 @@ import cProfile
 import littleted.logger as logger
 
 from littleted.gui.main_window import MainWindow
- 
+
 from littleted.gui.qt import QApplication
 from littleted.gui.sigint import setup_interrupt_handling
 from littleted.gui.menustyle  import MenuStyle
@@ -57,59 +57,59 @@ def runApp(args):
     app.setApplicationName("LittleTEd")
     app.setOrganizationName("arnet")
     ### app.setOrganizationDomain("www.my-org.com")
-    
+
     ## disable Alt key switching to application menu
     app.setStyle( MenuStyle() );
- 
+
     window = MainWindow()
     window.loadSettings()
- 
+
     window.show()
- 
+
     setup_interrupt_handling()
- 
+
     exitCode = app.exec_()
- 
+
     if exitCode == 0:
         window.saveSettings()
- 
+
     return exitCode
- 
- 
+
+
 def main():
     parser = argparse.ArgumentParser(description='Little Text Editor')
     parser.add_argument('--profile', action='store_const', const=True, default=False, help='Profile the code' )
     parser.add_argument('--pfile', action='store', default=None, help='Profile the code and output data to file' )
- 
+
     args = parser.parse_args()
- 
+
     _LOGGER.debug("\n\n")
     _LOGGER.debug("Starting the application")
     _LOGGER.debug("Logger log file: %s" % logger.log_file)
- 
+
     starttime = time.time()
     profiler = None
- 
+
     exitCode = 0
- 
+
     try:
- 
+
         profiler_outfile = args.pfile
         if args.profile is True or profiler_outfile is not None:
             print( "Starting profiler" )
             profiler = cProfile.Profile()
             profiler.enable()
- 
+
         exitCode = runApp(args)
- 
+
     # except BluetoothError as e:
     #     print "Error: ", e, " check if BT is powered on"
- 
+
     except BaseException:
         exitCode = 1
         _LOGGER.exception("Exception occurred")
         raise
- 
+
     finally:
         _LOGGER.info( "" )                    ## print new line
         if profiler is not None:
@@ -121,10 +121,10 @@ def main():
                 _LOGGER.info( "Storing profiler data to", profiler_outfile )
                 profiler.dump_stats( profiler_outfile )
                 _LOGGER.info( "pyprof2calltree -k -i", profiler_outfile )
- 
+
         timeDiff = (time.time() - starttime) * 1000.0
         _LOGGER.info( "Calculation time: {:13.8f}ms".format(timeDiff) )
- 
+
         sys.exit(exitCode)
 
 
