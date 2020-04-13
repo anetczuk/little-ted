@@ -12,10 +12,37 @@ cd $SCRIPT_DIR
 
 echo "disabling keys"
 
-sleep_state=$(xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/sleep-button-action)
-echo "power manager sleep button state: $sleep_state"
+##echo $XDG_CURRENT_DESKTOP
+## kde: KDE
 
-xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/sleep-button-action -s 0
+
+x_env=0
+sleep_button_state=""
+
+echo "Current X env: $XDG_CURRENT_DESKTOP"
+
+if [ "$XDG_CURRENT_DESKTOP" == "KDE" ]; then
+    echo "kde detected"
+    x_env="kde"
+elif [ "$XDG_CURRENT_DESKTOP" == "XFCE" ]; then
+    echo "xfce detected"
+    x_env="xfce4"
+fi
+
+
+if [ "$x_env" == "kde" ]; then
+    sleep_button_state=$(kreadconfig5 --file kglobalshortcutsrc --group org_kde_powerdevil --key=Sleep)
+    echo "Sleep global hotkey state: $sleep_button_state"
+    ## disable button
+    kwriteconfig5 --file kglobalshortcutsrc --group org_kde_powerdevil --key=Sleep "none,Sleep,Suspend"
+    ## reconfigure does not work
+    qdbus org.kde.KWin /KWin reconfigure
+elif [ "$x_env" == "xfce4" ]; then
+    sleep_button_state=$(xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/sleep-button-action)
+    echo "power manager sleep button state: $sleep_button_state"
+    ## disable button
+    xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/sleep-button-action -s 0
+fi
  
 XMODMAP_BACKUP_CONF=$SCRIPT_DIR/../tmp/xmodmap_backup.txt
 xmodmap -pke > $XMODMAP_BACKUP_CONF
@@ -26,8 +53,8 @@ xmodmap $XMODMAP_DISABLED_CONF
 
 echo "starting the app"
 
+exit_code=0
 python3 -m littleted "$@" && exit_code=$? || exit_code=$?
-
 
 if [ $exit_code -ne 0 ]; then
     echo "abnormal application exit: $exit_code"
@@ -36,8 +63,14 @@ fi
 
 echo "restoring keys settings"
 
-xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/sleep-button-action -s $sleep_state
-
 xmodmap $XMODMAP_BACKUP_CONF
+
+if [ "$x_env" == "kde" ]; then
+    kwriteconfig5 --file kglobalshortcutsrc --group org_kde_powerdevil --key=Sleep "$sleep_button_state"
+    ## reconfigure does not work
+    qdbus org.kde.KWin /KWin reconfigure
+elif [ "$x_env" == "xfce4" ]; then
+    xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/sleep-button-action -s $sleep_button_state
+fi
 
 echo "Done"
