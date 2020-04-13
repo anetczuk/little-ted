@@ -118,9 +118,18 @@ class MainWindow(QtBaseClass):
 
     
     def eventFilter( self, obj, event: QEvent ):
+#         if event.type() == QEvent.KeyPress:
+#             if len(event.text()) < 1:
+#                 if event.modifiers() == QtCore.Qt.AltModifier:
+#                     _LOGGER.info( "alt event ignored: %s %s: %s >%s<", obj, event, event.key(), event.text() )
+#                     event.ignore()
+#                     return True
+#             _LOGGER.info( "event: %s %s: %s >%s<", obj, event, event.key(), event.text() )
+        
         if obj is self.ui.textEdit:
             return self.textEditEventHandler(obj, event)
-        return super(MainWindow, self).eventFilter( obj, event )
+        
+        return super().eventFilter( obj, event )
     
     def textEditEventHandler(self, obj, event: QEvent ):
         if event.type() == QEvent.Wheel:
@@ -134,19 +143,11 @@ class MainWindow(QtBaseClass):
 #                     _LOGGER.info( "event intercepted: %s %s mod: %s %s", obj, event, modifiers, delta )
                 return True
 
-        ### context menu disabled in Ui file (Qt Designer)
-#             if event.type() == QEvent.ContextMenu:
-#                 _LOGGER.info( "event intercepted: %s %s", obj, event )
-#                 return True
+        return super().eventFilter( obj, event )
 
-#         if isinstance(event, QtGui.QKeyEvent):
-#             ## intercept
-#             return True
-# 
-#         _LOGGER.info( "event: %s %s", obj, event )
-        
-        return super(MainWindow, self).eventFilter( obj, event )
-
+    def closeEvent(self, event):
+        ## block Alt+F4 event and X button, but allow closing from File menu
+        event.setAccepted( not event.spontaneous() )
 
 MainWindow.logger = _LOGGER.getChild(MainWindow.__name__)
 
