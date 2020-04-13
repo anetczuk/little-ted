@@ -37,7 +37,7 @@ UiTargetClass, QtBaseClass = uiloader.loadUiFromClassName( __file__ )
 
 class MainWindow(QtBaseClass):
 
-    logger = None
+    logger: logging.Logger = None
 
     def __init__(self):
         super().__init__()
