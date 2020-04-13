@@ -1,13 +1,31 @@
+!!!!
+
+!! Left Alt, every Alt+... shortcut
+keycode  64 = NoSymbol
+
+!! Print screen
 keycode 107 = NoSymbol Sys_Req NoSymbol Sys_Req
 
+!! Audio mute, lower, raise
 keycode 121 = NoSymbol
 keycode 122 = NoSymbol
 keycode 123 = NoSymbol
 
+!! XF86PowerOff
+keycode 124 = NoSymbol
+
+!! XF86Open
 keycode 142 = NoSymbol
+!! XF86Calculator 
 keycode 148 = NoSymbol
+!! XF86WWW
 keycode 158 = NoSymbol
+!! XF86Mail
 keycode 163 = NoSymbol
+!! XF86HomePage
 keycode 180 = NoSymbol
 
+!! XF86Suspend
 keycode 213 = NoSymbol
+!! XF86Close
+keycode 214 = NoSymbol
