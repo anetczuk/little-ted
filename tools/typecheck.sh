@@ -13,4 +13,4 @@ CACHE_DIR=$SCRIPT_DIR/../tmp/.mypy_cache
 cd $SCRIPT_DIR/../src
 
 
-mypy --cache-dir $CACHE_DIR --no-strict-optional --ignore-missing-imports -p asmflowgraph -p testasmflowgraph
+mypy --cache-dir $CACHE_DIR --no-strict-optional --ignore-missing-imports -p littleted -p testlittleted
