@@ -44,7 +44,7 @@ from littleted.gui.main_window import MainWindow
 
 from littleted.gui.qt import QApplication
 from littleted.gui.sigint import setup_interrupt_handling
-from littleted.gui.menustyle  import MenuStyle
+from littleted.gui.menustyle import MenuStyle
 
 
 logger.configure()
@@ -59,7 +59,7 @@ def runApp(args):
     ### app.setOrganizationDomain("www.my-org.com")
 
     ## disable Alt key switching to application menu
-    app.setStyle( MenuStyle() );
+    app.setStyle( MenuStyle() )
 
     window = MainWindow()
     window.loadSettings()

@@ -53,13 +53,12 @@ class MainWindow(QtBaseClass):
         appIcon = QIcon( iconPath )
         self.setWindowIcon( appIcon )
 
-#         self.statusBar().showMessage("Ready")
-
+        #self.statusBar().showMessage("Ready")
 
     def loadSettings(self):
         settings = self.getSettings()
         self.logger.debug( "loading app state from %s", settings.fileName() )
-#         self.ui.appSettings.loadSettings( settings )
+        #self.ui.appSettings.loadSettings( settings )
 
         ## restore widget state and geometry
         settings.beginGroup( self.objectName() )
@@ -117,9 +116,7 @@ class MainWindow(QtBaseClass):
         settings = QtCore.QSettings(QtCore.QSettings.IniFormat, QtCore.QSettings.UserScope, orgName, appName, self)
         return settings
 
-
     ## ========================================================================
-
 
     def eventFilter( self, obj, event: QEvent ):
 #         if event.type() == QEvent.KeyPress:
@@ -141,9 +138,9 @@ class MainWindow(QtBaseClass):
             if modifiers == QtCore.Qt.ControlModifier:
                 delta = event.angleDelta().y()
                 if delta > 0:
-                    self.ui.textEdit.zoomIn(2);
+                    self.ui.textEdit.zoomIn(2)
                 elif delta < 0:
-                    self.ui.textEdit.zoomOut(2);
+                    self.ui.textEdit.zoomOut(2)
 #                     _LOGGER.info( "event intercepted: %s %s mod: %s %s", obj, event, modifiers, delta )
                 return True
 
@@ -152,6 +149,7 @@ class MainWindow(QtBaseClass):
     def closeEvent(self, event):
         ## block Alt+F4 event and X button, but allow closing from File menu
         event.setAccepted( not event.spontaneous() )
+
 
 MainWindow.logger = _LOGGER.getChild(MainWindow.__name__)
 
