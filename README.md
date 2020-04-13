@@ -19,4 +19,5 @@ With this app You can let Your *inner* child to press keys like a crazy without 
 
 ## Screens
 
-![Application](doc/app-screen.png "Application")
+[![Application](doc/app-screen-small.png "Application")](doc/app-screen.png)
+
