@@ -26,7 +26,7 @@ import logging
 
 from . import uiloader
 from . import resources
-from .qt import qApp, QtCore, QEvent
+from .qt import qApp, QtCore, QEvent, QIcon
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -48,6 +48,10 @@ class MainWindow(QtBaseClass):
         self.settingsFilePath = None
 
         self.ui.textEdit.installEventFilter( self )
+        
+        iconPath = resources.getImagePath( "text-editor-white.png" )
+        appIcon = QIcon( iconPath )
+        self.setWindowIcon( appIcon )
 
 #         self.statusBar().showMessage("Ready")
 
